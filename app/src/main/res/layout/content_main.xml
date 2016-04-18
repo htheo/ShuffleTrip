@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.shuffle.theo.shuffletrip.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/paysage"
+    android:gravity="top">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/name_ville"
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+
+            android:hint="Nom de la ville"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageView
+            android:id="@+id/article_alea"
+            android:clickable="true"
+            android:layout_width="226dp"
+            android:layout_height="336dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Explore la France d'un nouvel oeil plus proche des habitants"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+
