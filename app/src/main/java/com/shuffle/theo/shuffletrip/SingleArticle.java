@@ -2,6 +2,7 @@ package com.shuffle.theo.shuffletrip;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,15 +14,14 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -60,118 +60,122 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         title_view = (TextView) findViewById(R.id.title);
         title_ville = (TextView) findViewById(R.id.title_ville);
 
-        String result = null;
         InputStream is = null;
         StringBuilder sb=null;
         /*Typeface face = Typeface.createFromAsset(getAssets(),
                 "fonts/QuinchoScript_PersonalUse.ttf");
         title_ville.setTypeface(face);*/
 
-       // personList = new ArrayList<HashMap<String,String>>();
+        // personList = new ArrayList<HashMap<String,String>>();
         //getData();
 
 
         home.setOnClickListener(this);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
-        String ville = intent.getStringExtra("ville");
 
-    /*if(ville == null){
-        text_id.setText("article "+id);
-    }else{
-        text_id.setText("article "+id);
-        title_ville.setText(ville);
-    }*/
-        //http post
-        try{
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article.php");
-            //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = httpclient.execute(httppost);
+
+        StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        HttpClient httpclient = new DefaultHttpClient();
+
+        // Prepare a request object
+        HttpGet httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article");
+
+        // Execute the request
+        HttpResponse response;
+        try {
+            response = httpclient.execute(httpget);
+            // Examine the response status
+            //Log.i("Info",response.getStatusLine().toString());  Comes back with HTTP/1.1 200 OK
+
+            // Get hold of the response entity
             HttpEntity entity = response.getEntity();
-            is = entity.getContent();
-        }catch(Exception e){
-            Log.e("log_tag", "Error in http connection"+e.toString());
+
+            if (entity != null) {
+                InputStream instream = entity.getContent();
+                String result= convertStreamToString(instream);
+
+                JSONArray arr = new JSONArray(result);
+                JSONObject jObj = arr.getJSONObject(0);
+                String title = jObj.getString("title");
+                String ville = jObj.getString("ville");
+                String describ = jObj.getString("describ");
+                title_view.setText(title);
+                title_ville.setText(ville);
+                text_id.setText(describ);
+                Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+                instream.close();
+            }
+
+
+        } catch (Exception e) {
+            Log.e("Error",e.toString());
         }
+    }
 
-        //convert response to string
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-            sb = new StringBuilder();
-            sb.append(reader.readLine() + "\n");
-            String line="0";
 
+
+
+    private String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append('\n');
             }
-
-            is.close();
-            result=sb.toString();
-
-        }catch(Exception e){
-            Log.e("log_tag", "Error converting result "+e.toString());
-        }
-
-        //paring data
-        int fd_id;
-        String fd_name;
-        try{
-            JSONArray jArray = new JSONArray(result);
-            JSONObject json_data=null;
-
-            for(int i=0;i<jArray.length();i++){
-                json_data = jArray.getJSONObject(i);
-                title=json_data.getString("title");
-                title_view.setText(title);
-                //fd_name=json_data.getString("FOOD_NAME");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        }catch(JSONException e1){
-            Toast.makeText(getBaseContext(), "No Food Found", Toast.LENGTH_LONG).show();
-        }catch (ParseException e1){
-            e1.printStackTrace();
         }
+        return sb.toString();
     }
 
 
 
 
 
+    /* public void getData(){
+         class GetDataJSON extends AsyncTask<String, Void, String> {
+
+             @Override
+             protected String doInBackground(String... arg0) {
+                 // TODO Auto-generated method stub
 
 
+                 jsonObj = jParser.makeHttpRequest("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article.php");
 
-   /* public void getData(){
-        class GetDataJSON extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected String doInBackground(String... arg0) {
-                // TODO Auto-generated method stub
-
-
-                jsonObj = jParser.makeHttpRequest("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article.php");
-
-                try {
-                    title = jsonObj.getString("title");
-                    /*String describ = jsonObj.getString(TAG_DESCRIB);
-                    String ville = jsonObj.getString(TAG_VILLE);
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                return title;
-            }
-            protected void onPostExecute(String title){
+                 try {
+                     title = jsonObj.getString("title");
+                     /*String describ = jsonObj.getString(TAG_DESCRIB);
+                     String ville = jsonObj.getString(TAG_VILLE);
+                 } catch (JSONException e) {
+                     // TODO Auto-generated catch block
+                     e.printStackTrace();
+                 }
+                 return title;
+             }
+             protected void onPostExecute(String title){
 
 
-                title_view.setText(title);
-                /*text_id.setText(title);
-                System.out.println(title);
-            }
-        }
-        GetDataJSON g = new GetDataJSON();
-        g.execute();
-    }
-*/
+                 title_view.setText(title);
+                 /*text_id.setText(title);
+                 System.out.println(title);
+             }
+         }
+         GetDataJSON g = new GetDataJSON();
+         g.execute();
+     }
+ */
     public void onClick(View v) {
         if (v == home) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, MainActivity.class);
