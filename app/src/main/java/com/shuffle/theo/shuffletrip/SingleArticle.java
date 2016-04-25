@@ -73,6 +73,8 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         home.setOnClickListener(this);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
+        String ville_choisi = intent.getStringExtra("ville");
+
 
 
         StrictMode.ThreadPolicy policy = new
@@ -80,9 +82,18 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         StrictMode.setThreadPolicy(policy);
 
         HttpClient httpclient = new DefaultHttpClient();
-
+        HttpGet httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ville="+ville_choisi+"ID="+id);
         // Prepare a request object
-        HttpGet httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article");
+      /*  if(ville_choisi!=null){
+            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ville="+ville_choisi);
+        }
+        else if(id==-1){
+            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article");
+        }
+        else {
+            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ID="+id);
+        }*/
+
 
         // Execute the request
         HttpResponse response;

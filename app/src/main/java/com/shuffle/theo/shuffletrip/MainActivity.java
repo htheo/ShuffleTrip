@@ -2,22 +2,12 @@ package com.shuffle.theo.shuffletrip;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.view.View;
-import android.view.View.OnClickListener;
-
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     public ImageButton home;
@@ -67,13 +57,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         if (v == article_alea) {    //si on va sur son compte
 
             Intent Intent = new Intent(MainActivity.this, SingleArticle.class);
-            Random r = new Random();
-            int id_alea = 0 + r.nextInt(12 - 0);
+
 
 
             String ville = name_ville.getText().toString();
 
-            Intent.putExtra("id", id_alea);
+            Intent.putExtra("id", -1);
             Intent.putExtra("ville", ville);
 
 
