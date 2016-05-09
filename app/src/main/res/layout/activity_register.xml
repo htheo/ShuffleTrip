@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/paysage"
+    tools:context="com.shuffle.theo.shuffletrip.LoginActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/logo"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1.22" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inscription"
+            android:gravity="center"
+            android:textSize="35dp"/>
+        <EditText
+            android:id="@+id/edit_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pseudo"
+            android:layout_gravity="center"/>
+        <EditText
+            android:id="@+id/edit_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mail"
+            android:layout_gravity="center"/>
+
+
+        <EditText
+            android:id="@+id/edit_password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="mot de passe"
+            android:layout_gravity="center"/>
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="Confirmer le mot de passe"
+            android:layout_gravity="center"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="S'inscrire"
+                android:background="#30FFFFFF"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/menu"/>
+
+
+
+</RelativeLayout>

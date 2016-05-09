@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.shuffle.theo.shuffletrip.SingleArticle"
     tools:showIn="@layout/activity_single_article"
-    android:background="@drawable/paysage_blur"
+    android:background="@mipmap/paysage_blur"
     android:gravity="top">
 
 

@@ -43,31 +43,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
     public void onClick(View v) {
+        switch (v.getId()) {
 
-        if (v == user) {
+            case R.id.user:
 
-            Intent I_News = new Intent(MainActivity.this, UserActivity.class);
-            this.startActivity(I_News);
+                Intent I_News = new Intent(this, LoginActivity.class);
+                startActivity(I_News);
+                break;
+            case R.id.search:
+                I_News = new Intent(this, SearchActivity.class);
+                this.startActivity(I_News);
+                break;
+            case R.id.article_alea:
+                Intent Intent = new Intent(this, SingleArticle.class);
+
+
+
+                String ville = name_ville.getText().toString();
+
+                Intent.putExtra("id", -1);
+                Intent.putExtra("ville", ville);
+
+
+                this.startActivity(Intent);
+                break;
         }
-        if (v == search) {    //si on va sur son compte
-
-            Intent I_News = new Intent(MainActivity.this, SearchActivity.class);
-            this.startActivity(I_News);
-        }
-        if (v == article_alea) {    //si on va sur son compte
-
-            Intent Intent = new Intent(MainActivity.this, SingleArticle.class);
 
 
-
-            String ville = name_ville.getText().toString();
-
-            Intent.putExtra("id", -1);
-            Intent.putExtra("ville", ville);
-
-
-            this.startActivity(Intent);
-        }
 
 
     }

@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
 
         if (v == user) {  //si on va sur l'accueil
-            Intent I_News = new Intent(SearchActivity.this, UserActivity.class);
+            Intent I_News = new Intent(SearchActivity.this, LoginActivity.class);
             this.startActivity(I_News);
         }
 

@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.shuffle.theo.shuffletrip.SearchActivity"
     tools:showIn="@layout/activity_search"
-    android:background="@drawable/paysage_blur"
+    android:background="@mipmap/paysage_blur"
     android:gravity="top">
 
 <ScrollView
@@ -35,7 +35,7 @@
                 android:clickable="true"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
-                android:src="@drawable/search"
+                android:src="@mipmap/search"
                 android:alpha="0.9"
                 android:layout_marginRight="20dp"
                 android:background="@null"

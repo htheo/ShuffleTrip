@@ -62,15 +62,8 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
         InputStream is = null;
         StringBuilder sb=null;
-        /*Typeface face = Typeface.createFromAsset(getAssets(),
-                "fonts/QuinchoScript_PersonalUse.ttf");
-        title_ville.setTypeface(face);*/
-
-        // personList = new ArrayList<HashMap<String,String>>();
-        //getData();
-
-
         home.setOnClickListener(this);
+
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         String ville_choisi = intent.getStringExtra("ville");
@@ -83,26 +76,10 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ville="+ville_choisi+"ID="+id);
-        // Prepare a request object
-      /*  if(ville_choisi!=null){
-            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ville="+ville_choisi);
-        }
-        else if(id==-1){
-            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article");
-        }
-        else {
-            httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ID="+id);
-        }*/
 
-
-        // Execute the request
         HttpResponse response;
         try {
             response = httpclient.execute(httpget);
-            // Examine the response status
-            //Log.i("Info",response.getStatusLine().toString());  Comes back with HTTP/1.1 200 OK
-
-            // Get hold of the response entity
             HttpEntity entity = response.getEntity();
 
             if (entity != null) {
@@ -151,42 +128,6 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         return sb.toString();
     }
 
-
-
-
-
-    /* public void getData(){
-         class GetDataJSON extends AsyncTask<String, Void, String> {
-
-             @Override
-             protected String doInBackground(String... arg0) {
-                 // TODO Auto-generated method stub
-
-
-                 jsonObj = jParser.makeHttpRequest("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article.php");
-
-                 try {
-                     title = jsonObj.getString("title");
-                     /*String describ = jsonObj.getString(TAG_DESCRIB);
-                     String ville = jsonObj.getString(TAG_VILLE);
-                 } catch (JSONException e) {
-                     // TODO Auto-generated catch block
-                     e.printStackTrace();
-                 }
-                 return title;
-             }
-             protected void onPostExecute(String title){
-
-
-                 title_view.setText(title);
-                 /*text_id.setText(title);
-                 System.out.println(title);
-             }
-         }
-         GetDataJSON g = new GetDataJSON();
-         g.execute();
-     }
- */
     public void onClick(View v) {
         if (v == home) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, MainActivity.class);
@@ -197,7 +138,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
             this.startActivity(I_News);
         }
         if (v == user) {  //si on va sur l'accueil
-            Intent I_News = new Intent(SingleArticle.this, UserActivity.class);
+            Intent I_News = new Intent(SingleArticle.this, LoginActivity.class);
             this.startActivity(I_News);
         }
 
