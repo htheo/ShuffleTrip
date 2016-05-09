@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
         final String TAG = "AsyncTaskParseJson.java";
               // set your json string url here
-        String yourJsonStringUrl = "http://theo-hinfray.fr/IIM/ShuffleTrip/connection?pseudo="+pseudo+"&&password="+password;
+        String yourJsonStringUrl = "http://theo-hinfray.fr/IIM/ShuffleTrip/connection?pseudo=badabouh&&password=abc";
 
         // contacts JSONArray
         JSONArray dataJsonArr = null;
