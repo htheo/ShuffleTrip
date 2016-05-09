@@ -209,6 +209,4 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
         HttpConnectionParams.setSoTimeout(httpRequestParams, 1000 * 30);
         return httpRequestParams;
     }
-
-
 }
