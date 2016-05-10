@@ -57,8 +57,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 break;
             case R.id.login:
                 pseudo = edit_login.getText().toString();
-                password = edit_login.getText().toString();
-                new AsyncTaskParseJson().execute();
+                password = edit_password.getText().toString();
+                new AsyncTaskParseJson().execute(pseudo, password);
 
 
 
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
         final String TAG = "AsyncTaskParseJson.java";
               // set your json string url here
-        String yourJsonStringUrl = "http://theo-hinfray.fr/IIM/ShuffleTrip/connection?pseudo=badabouh&&password=abc";
+
 
         // contacts JSONArray
         JSONArray dataJsonArr = null;
@@ -89,8 +89,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         protected void onPreExecute() {}
 
         @Override
-        protected String doInBackground(String... arg0) {
-
+        protected String doInBackground(String... args) {
+            String pseudo = args[0];
+            String password = args[1];
+            String yourJsonStringUrl = "http://theo-hinfray.fr/IIM/ShuffleTrip/connection?pseudo="+pseudo+"&&password="+password;
             try {
 
                 // instantiate our json parser
@@ -108,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     JSONObject c = dataJsonArr.getJSONObject(i);
 
                     // Storing each json item in variable
-                    String pseudo = c.getString("pseudo");
+                    pseudo = c.getString("pseudo");
 
                     // show the values in our logcat
                     Log.e(TAG, "pseudo: " + pseudo);
