@@ -5,6 +5,13 @@
     <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To take pictures -->
+    <uses-feature
+        android:name="android.hardware.Camera"
+        android:required="true"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
