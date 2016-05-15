@@ -18,7 +18,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -38,18 +39,41 @@
             android:gravity="center"
             android:id="@+id/pseudo" />
 
-        <ImageView
-            android:id="@+id/Imageprev"
-            android:layout_width="match_parent"
-            android:layout_height="400dp" />
-
-        <Button
-            android:id="@+id/cpic"
-            android:text="Appareil Photo"
-            android:layout_centerInParent="true"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Imageprev" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Postez une image !"
+            android:id="@+id/textView"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/cpic"
+                android:text="Appareil Photo"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_below="@+id/Imageprev"
+                android:layout_weight="0.4" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="GALLERIE"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="50" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/Imageprev"
+            android:layout_width="189dp"
+            android:layout_height="230dp" />
 
         <Button
             android:id="@+id/up"
@@ -57,8 +81,8 @@
             android:layout_height="wrap_content"
             android:text="Envoyer"
             android:layout_below="@+id/cpic"
-            android:layout_centerInParent="true" />
-
+            android:layout_centerInParent="true"
+            android:layout_gravity="right" />
 
 
     </LinearLayout>
