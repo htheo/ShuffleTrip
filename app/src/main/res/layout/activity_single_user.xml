@@ -11,45 +11,5 @@
     <include layout="@layout/content_user" />
     <include layout="@layout/menu" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/Imageprev"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:contentDescription="Previsualsiation" />
-            <EditText
-                android:id="@+id/etUploadName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/cpic"
-                android:text="@string/click_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/up"
-                android:text="@string/upload_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <!--<ImageView
-                android:id="@+id/downloadedImage"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp" />
-            <EditText
-                android:id="@+id/etDownloadName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/bDownloadImage"
-                android:text="Download Image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />-->
-
-        </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

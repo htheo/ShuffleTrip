@@ -43,7 +43,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
 
     private static final int RESULT_LOAD_IMAGE = 1;
-    private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
+    private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/SavePicture.php";
 
     ImageView imageToUpload, downloadedImage;
     Button bUploadImage, bDownloadImage;
@@ -55,7 +55,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
     Uri selectedImage;
     Bitmap photo;
     String ba1;
-    public static String URL = "http://timothee-dorand.fr/shuffletrip";
+    public static String URL = "http://timothee-dorand.fr/shuffletrip/SavePicture.php";
 
 
     @Override
@@ -195,6 +195,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
+            assert cursor != null;
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

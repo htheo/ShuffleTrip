@@ -17,6 +17,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="upload_image">Upload Image</string>
-    <string name="click_image">Click Image</string>
+    <string name="upload_image">Envoyer</string>
+    <string name="click_image">Appareil photo</string>
 </resources>
