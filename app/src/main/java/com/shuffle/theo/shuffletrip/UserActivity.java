@@ -48,7 +48,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
     /* UPLOAD */
 
-    public static String URL = "http://timothee-dorand.fr/shuffletrip/SavePicture.php";
+    public static String URL = "http://timothee-dorand.fr/shuffletrip/imgapp/SavePicture.php";
     Button btpic, btnup;
     String ba1;
     String mCurrentPhotoPath;
