@@ -1,6 +1,5 @@
 package com.shuffle.theo.shuffletrip;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,29 +10,24 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UserActivity extends AppCompatActivity implements OnClickListener {
@@ -48,11 +42,12 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
     /* UPLOAD */
 
-    public static String URL = "http://timothee-dorand.fr/shuffletrip/imgapp/SavePicture.php";
-    Button btpic, btnup;
-    String ba1;
-    String mCurrentPhotoPath;
-    ImageView mImageView;
+    private Button button;
+    private String encoded_string, image_name;
+    private Bitmap bitmap;
+    private File file;
+    private Uri file_uri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +68,19 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
 
         /*Code Tim*/
-            btpic = (Button) findViewById(R.id.cpic);
-            mImageView = (ImageView) findViewById(R.id.Imageprev);
-            btpic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    captureImage();
-                }
-            });
 
-            btnup = (Button) findViewById(R.id.up);
-            btnup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    upload();
-                }
-            });
+        button = (Button) findViewById(R.id.cpic);
+        button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view){
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                getFileUri();
+                i.putExtra(MediaStore.EXTRA_OUTPUT,file_uri);
+                startActivityForResult(i,10);
+            }
+        });
+
         }
 
     /* TEMPLATE */
@@ -109,133 +101,71 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
     /* TEST NEW UPLOAD
     v3...
-     * https://trinitytuts.com/capture-image-upload-server-android/ */
+     * https://trinitytuts.com/capture-image-upload-server-android/
+      *
+      * v4 !
+      * https://www.youtube.com/watch?v=dV46_-AS4Pg <3
+      * */
 
-    private void upload() {
-        Bitmap bm = BitmapFactory.decodeFile(mCurrentPhotoPath);
-        ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 50, bao);
-        byte[] ba = bao.toByteArray();
-//        ba1 = Base64.encodeBytes(ba);
-//        encodeBytes ne fonctionne pas
-        ba1 = Base64.encodeToString(ba, Base64.DEFAULT );
-//        String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
+    private void getFileUri() {
+        image_name = "testing123.jpg";
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                + File.separator + image_name
+        );
 
-
-        // Upload image to server
-        new uploadToServer().execute();
-
+        file_uri = Uri.fromFile(file);
     }
 
-
-    private void captureImage() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, 100);
-            }
-        }
-    }
-
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100 && resultCode == RESULT_OK) {
-            setPic();
+
+        if (requestCode == 10 && resultCode == RESULT_OK) {
+            new Encode_image().execute();
         }
     }
 
-    public class uploadToServer extends AsyncTask<Void, Void, String> {
+    private class Encode_image extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
 
-        private ProgressDialog pd = new ProgressDialog(UserActivity.this);
+            bitmap = BitmapFactory.decodeFile(file_uri.getPath());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pd.setMessage("Wait image uploading!");
-            pd.show();
+            byte[] array = stream.toByteArray();
+            encoded_string = Base64.encodeToString(array, 0);
+            return null;
         }
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected void onPostExecute(Void aVoid) {
+            makeRequest();
+        }
+    }
 
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("base64", ba1));
-            nameValuePairs.add(new BasicNameValuePair("ImageName", System.currentTimeMillis() + ".jpg"));
-            try {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(URL);
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-                String st = EntityUtils.toString(response.getEntity());
-                Log.v("log_tag", "In the try Loop" + st);
+    private void makeRequest() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/connection.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-            } catch (Exception e) {
-                Log.v("log_tag", "Error in http connection " + e.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
-            return "Success";
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("encoded_string",encoded_string);
+                map.put("image_name",image_name);
 
-        }
-
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            pd.hide();
-            pd.dismiss();
-        }
+                return map;
+            }
+        };
+        requestQueue.add(request);
     }
-
-    private void setPic() {
-        // Get the dimensions of the View
-        int targetW = mImageView.getWidth();
-        int targetH = mImageView.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageView.setImageBitmap(bitmap);
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        Log.e("Getpath", "Cool" + mCurrentPhotoPath);
-        return image;
-    }
-
 }
-
-

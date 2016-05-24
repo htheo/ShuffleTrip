@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:text="GALLERIE"
-                android:id="@+id/button"
+                android:id="@+id/cgallery"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="50" />
         </LinearLayout>
