@@ -60,32 +60,34 @@
                 android:layout_height="100dp"
                 android:layout_below="@+id/Imageprev"
                 android:layout_weight="0.4" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="GALLERIE"
-                android:id="@+id/cgallery"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="50" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/Imageprev"
-            android:layout_width="189dp"
-            android:layout_height="230dp" />
-
-        <Button
-            android:id="@+id/up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Envoyer"
-            android:layout_below="@+id/cpic"
-            android:layout_centerInParent="true"
-            android:layout_gravity="right" />
-
-
     </LinearLayout>
+
+            <!--       <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="100dp"
+                       android:text="GALLERIE"
+                       android:id="@+id/cgallery"
+                       android:layout_gravity="center_horizontal"
+                       android:layout_weight="50" />
+               </LinearLayout>
+
+               <ImageView
+                   android:id="@+id/Imageprev"
+                   android:layout_width="189dp"
+                   android:layout_height="230dp" />
+
+               <Button
+                   android:id="@+id/up"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Envoyer"
+                   android:layout_below="@+id/cpic"
+                   android:layout_centerInParent="true"
+                   android:layout_gravity="right" />
+
+
+    </LinearLayout>-->
 
 </RelativeLayout>
 
