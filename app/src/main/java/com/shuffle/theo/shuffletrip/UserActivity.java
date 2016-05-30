@@ -26,8 +26,11 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 public class UserActivity extends AppCompatActivity implements OnClickListener {
@@ -108,7 +111,13 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
       * */
 
     private void getFileUri() {
-        image_name = "testing123.jpg";
+
+        Date aujourdhui = new Date();
+        DateFormat mediumDateFormat = DateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM,
+                DateFormat.MEDIUM);
+
+        image_name = mediumDateFormat.format(aujourdhui);
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + File.separator + image_name
         );
@@ -156,7 +165,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }) {
+        })
+        {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();

@@ -52,16 +52,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:text="Titre" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText4"
+            android:text="Description" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:text="Ville" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1">
+
             <Button
                 android:id="@+id/cpic"
                 android:text="Appareil Photo"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/Imageprev"
-                android:layout_weight="0.4" />
+                android:layout_weight="0.5" />
+
+            <Button
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:text="Valider"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.5" />
         </LinearLayout>
+
     </LinearLayout>
+
+
 
             <!--       <Button
                        android:layout_width="wrap_content"
