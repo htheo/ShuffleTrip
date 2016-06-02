@@ -46,7 +46,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
     /* UPLOAD */
 
     private Button button;
-    private String encoded_string, image_name;
+    private String encoded_string, image_name, description, ville;
     private Bitmap bitmap;
     private File file;
     private Uri file_uri;
@@ -74,7 +74,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
         button = (Button) findViewById(R.id.cpic);
         button.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View view){
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -99,7 +98,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
             Intent I_News = new Intent(UserActivity.this, SearchActivity.class);
             this.startActivity(I_News);
         }
-
     }
 
     /* TEST NEW UPLOAD
@@ -110,6 +108,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
       * https://www.youtube.com/watch?v=dV46_-AS4Pg <3
       * */
 
+
     private void getFileUri() {
 
         Date aujourdhui = new Date();
@@ -117,7 +116,9 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
                 DateFormat.MEDIUM,
                 DateFormat.MEDIUM);
 
-        image_name = mediumDateFormat.format(aujourdhui);
+        image_name = mediumDateFormat.format(aujourdhui)+".jpg";
+        ville = "Anet";
+        description = "coucou";
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + File.separator + image_name
         );
@@ -172,6 +173,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
                 HashMap<String,String> map = new HashMap<>();
                 map.put("encoded_string",encoded_string);
                 map.put("image_name",image_name);
+                map.put("describ",description);
+                map.put("ville",ville);
 
                 return map;
             }
