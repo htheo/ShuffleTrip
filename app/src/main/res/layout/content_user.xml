@@ -57,22 +57,23 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:text="Titre" />
+            android:id="@+id/input_titre"
+            android:hint="Titre"
+            />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText4"
-            android:text="Description" />
+            android:id="@+id/input_desc"
+            android:hint="Description" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:text="Ville" />
+            android:id="@+id/input_ville"
+            android:hint="Ville" />
 
         <LinearLayout
             android:orientation="horizontal"

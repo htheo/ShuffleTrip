@@ -6,6 +6,7 @@ if(isset($_POST["encoded_string"])){
 	
 	$encoded_string = $_POST["encoded_string"];
 	$image_name = $_POST["image_name"];
+	$ville = $_POST["title"];
 	$describ = $_POST["describ"];
 	$ville = $_POST["ville"];
 
@@ -21,7 +22,7 @@ if(isset($_POST["encoded_string"])){
 	if($is_written > 0) {
 
 			$connection = mysqli_connect('timotheefxtim.mysql.db','timotheefxtim','Adminparis96','timotheefxtim');
-			$query = "INSERT INTO shuffle_articles(image,path,describ,ville) values('$image_name','$path','$describ','$ville');";
+			$query = "INSERT INTO shuffle_articles(image,path,describ,ville,title) values('$image_name','$path','$describ','$ville','$title');";
 
 			$result = mysqli_query($connection, $query);
 

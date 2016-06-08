@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,14 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
     /* UPLOAD */
 
     private Button button;
-    private String encoded_string, image_name, description, ville;
+    private String encoded_string, image_name;
     private Bitmap bitmap;
     private File file;
     private Uri file_uri;
 
+    public String ville, titre, description;
+
+    private EditText input_desc, input_ville, input_titre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +102,16 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
             Intent I_News = new Intent(UserActivity.this, SearchActivity.class);
             this.startActivity(I_News);
         }
+
+/*        EditText input_titre = (EditText)findViewById(R.id.input_titre);
+        titre = input_titre.getText().toString();
+
+        EditText input_ville = (EditText)findViewById(R.id.input_ville);
+        ville = input_ville.getText().toString();
+
+        EditText input_desc = (EditText)findViewById(R.id.input_desc);
+        description = input_desc.getText().toString();*/
+
     }
 
     /* TEST NEW UPLOAD
@@ -111,14 +125,26 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
     private void getFileUri() {
 
+        SimpleDateFormat formater = null;
         Date aujourdhui = new Date();
-        DateFormat mediumDateFormat = DateFormat.getDateTimeInstance(
-                DateFormat.MEDIUM,
-                DateFormat.MEDIUM);
+        formater = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        image_name = mediumDateFormat.format(aujourdhui)+".jpg";
-        ville = "Anet";
-        description = "coucou";
+//        Format de la date: AnnéeMoisJoursHeureMinuteSecondes
+
+        image_name = formater.format(aujourdhui)+".jpg";
+
+//        Récupération du formulaire EditText
+
+        EditText input_titre = (EditText)findViewById(R.id.input_titre);
+        titre = input_titre.getText().toString();
+
+        EditText input_ville = (EditText)findViewById(R.id.input_ville);
+        ville = input_ville.getText().toString();
+
+        EditText input_desc = (EditText)findViewById(R.id.input_desc);
+        description = input_desc.getText().toString();
+
+
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + File.separator + image_name
         );
@@ -173,6 +199,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
                 HashMap<String,String> map = new HashMap<>();
                 map.put("encoded_string",encoded_string);
                 map.put("image_name",image_name);
+                map.put("title",titre);
                 map.put("describ",description);
                 map.put("ville",ville);
 
