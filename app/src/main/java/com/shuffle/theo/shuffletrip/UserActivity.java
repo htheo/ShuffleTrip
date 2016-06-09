@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -27,6 +28,9 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,7 +58,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
     public String ville, titre, description;
 
-    private EditText input_desc, input_ville, input_titre;
+    ImageView downloadedImage;
+    private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
                 startActivityForResult(i,10);
             }
         });
+
+        downloadedImage = (ImageView) findViewById(R.id.downloadedImage);
 
         }
 
@@ -157,6 +164,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
         if (requestCode == 10 && resultCode == RESULT_OK) {
             new Encode_image().execute();
+            new DownloadImage("20160608115417.jpg").execute();
         }
     }
 
@@ -180,8 +188,11 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
     }
 
     private void makeRequest() {
+
+        String urlconnection = SERVER_ADRESS + "connection.php";
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/connection.php",
+        StringRequest request = new StringRequest(Request.Method.POST, urlconnection,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -208,4 +219,40 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
         };
         requestQueue.add(request);
     }
+
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap>{
+
+        String name;
+
+        public DownloadImage(String name){
+            this.name = name;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADRESS + "images/" + name;
+
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null){
+                downloadedImage.setImageBitmap(bitmap);
+            }
+        }
+    }
+
+
 }

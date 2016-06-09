@@ -1,6 +1,9 @@
 package com.shuffle.theo.shuffletrip;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,9 +37,16 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     public ImageButton home;
     public ImageButton search;
     public ImageButton user;
+
+    // Récupération de l'image
+    private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
+    public ImageView img_single_article;
+    public String image;
+
     private TextView text_id;
     private TextView title_view;
-    private TextView title_ville;String myJSON;
+    private TextView title_ville;
+    String myJSON;
     JSONObject jsonObj = null;
     String title;
 
@@ -41,6 +54,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     private static final String TAG_TITLE = "title";
     private static final String TAG_DESCRIB = "describ";
     private static final String TAG_VILLE ="ville";
+    private static final String TAG_IMAGE ="iamge";
 
     JSONArray peoples = null;
 
@@ -68,6 +82,9 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         int id = intent.getIntExtra("id", 0);
         String ville_choisi = intent.getStringExtra("ville");
 
+        img_single_article = (ImageView) findViewById(R.id.img_single_article);
+
+
 
 
         StrictMode.ThreadPolicy policy = new
@@ -75,7 +92,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         StrictMode.setThreadPolicy(policy);
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://theo-hinfray.fr/IIM/ShuffleTrip/show_article?ville="+ville_choisi+"ID="+id);
+        HttpGet httpget = new HttpGet("http://timothee-dorand.fr/shuffletrip/show_articles?ville="+ville_choisi+"ID="+id);
 
         HttpResponse response;
         try {
@@ -88,19 +105,58 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
                 JSONArray arr = new JSONArray(result);
                 JSONObject jObj = arr.getJSONObject(0);
-                String title = jObj.getString("title");
-                String ville = jObj.getString("ville");
-                String describ = jObj.getString("describ");
+                String title = jObj.optString("title");
+                String ville = jObj.optString("ville");
+                String describ = jObj.optString("describ");
+                String image = jObj.optString("image");
+
+                if(image != null) {
+                    new DownloadImage(image).execute();
+                }
                 title_view.setText(title);
                 title_ville.setText(ville);
                 text_id.setText(describ);
                 Toast.makeText(this, title, Toast.LENGTH_LONG).show();
                 instream.close();
-            }
 
+            }
 
         } catch (Exception e) {
             Log.e("Error",e.toString());
+        }
+    }
+
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
+
+        String name;
+
+        public DownloadImage(String name){
+            this.name = name;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADRESS + "images/" + name;
+
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if(null != bitmap) {
+                img_single_article.setImageBitmap(bitmap);
+            }
         }
     }
 

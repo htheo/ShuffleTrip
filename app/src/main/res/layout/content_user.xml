@@ -19,7 +19,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:weightSum="1">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -84,21 +85,21 @@
 
             <Button
                 android:id="@+id/cpic"
-                android:text="Appareil Photo"
+                android:text="Prendre la photo et valider"
                 android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/Imageprev"
-                android:layout_weight="0.5" />
+                android:layout_below="@+id/Imageprev" />
 
-            <Button
-                android:layout_width="156dp"
-                android:layout_height="wrap_content"
-                android:text="Valider"
-                android:id="@+id/button"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.5" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/downloadedImage"
+            android:layout_width="206dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.72"
+            />
 
     </LinearLayout>
 

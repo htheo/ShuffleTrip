@@ -49,18 +49,18 @@
             android:layout_width="304dp"
             android:layout_height="290dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/chateau"
             android:layout_gravity="center_horizontal" />
         <TextView
             android:id="@+id/title_article"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:text="Construit à la gloire de Diane de Poitiers, les visites sont possibles, c'est un endroit très sympa je recommande"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textColor="#FFFFFF"
             android:gravity="center|center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="inherit" />
 
 
 
