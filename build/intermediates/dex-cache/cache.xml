@@ -1,2 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d4c936aa8c7d2522c82e3f1829c791d9e367f009">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.2.0_adcd7271a92f46a26f93b4990e2d3717049d5569/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.2.0_ea35fab0f8fcb70c01a62763558f78f6e49ce653/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/design/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1aa5b025efe97f5006f5be16d6ca67c6c3c0c0d8">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.2.0_19cb9326f32e964604fa992bb18cbd8cbea72db3/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.0_3673a2dfd34be7990cc2b8a9fa715222a2a291b1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.0_9c630964c6be167b639cd098118dde9b6424c474/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.volley/volley/1.0.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.volley-volley-1.0.0_ee1be056059f96a3ebf74dd1a8ec4ad5eab5dd9d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.0_537b7daa6a5e99f5f389d4609d46a99caa19b640/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1279250347bf7417a858b7d3f4e825533030d09d">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_da0dacf3bafdeee06f61741bd721bbd105d03c92/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/.gradle/caches/modules-2/files-2.1/org.jbundle.util.osgi.wrapped/org.jbundle.util.osgi.wrapped.org.apache.http.client/4.1.2/98c86e42679fe7ac066f6c242e0d14f0bce0bb7c/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2_bd2ac383e4e6916008f18711800badb434e30f12/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.2.0_28ab70e4416ecd26aa268e092ff482a6c8f7e091/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="bd7831f7f199010dcf081d165285e2a3c1c92a6a">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_8fac4b99c371dea3d4d5091fceaef76241c122c6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/Users/Tim/AndroidStudioProjects/ShuffleTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.2.0_cd0ac9904844db92fcddb3d1368b1b722bf62346/classes.dex" />
+    </item>
+
+</items>
