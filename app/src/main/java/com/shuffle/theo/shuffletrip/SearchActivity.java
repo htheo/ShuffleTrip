@@ -127,7 +127,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         StrictMode.setThreadPolicy(policy);
 
 
-        String yourJsonStringUrl ="http://theo-hinfray.fr/IIM/ShuffleTrip/show_articles";
+        String yourJsonStringUrl ="http://http://timothee-dorand.fr/shuffletrip/show_articles_multi";
         JSONArray dataJsonArr = null;
         try {
 
@@ -139,7 +139,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             JSONObject json = jParser.getJSONFromUrl(yourJsonStringUrl);
 
             // get the array of users
-            dataJsonArr = json.getJSONArray('Articles');
+            dataJsonArr = json.getJSONArray("Articles");
                     // get the array of users
 
                     // loop through all users
@@ -147,20 +147,20 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
                         JSONObject c = dataJsonArr.getJSONObject(i);
 
-                        String ville = c.getString("ville");
+                        String ville = c.optString("ville");
                         String describ = c.getString("describ");
-                        String image = c.getString("image");
+                        String image = c.optString("image");
 
                         Log.e("ville","ID"+ville);
                         Log.e("describ", "ID: " + describ);
 
 
 
-                        /*if (image != null) {
+                        if (image != null) {
                             new DownloadImage(image).execute();
-                        }*/
+                        }
                         Toast.makeText(this, title, Toast.LENGTH_LONG).show();
-
+                       
 
             }
 
