@@ -20,16 +20,13 @@ try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // check for required fields
-if (isset($_POST['ville'])&&$_POST['ville']!="") {
+if ($_GET['ville']!="") {
 
-    $ville = $_POST['ville'];
- 
-
-   $sql="SELECT * FROM shuffle_articles order by RAND() WHERE ville='". $ville ."' LIMIT 1";
+    $ville = $_GET['ville'];
+    $sql="SELECT * FROM shuffle_articles WHERE ville='". $ville ."' LIMIT 1";
   
-}
-elseif(isset($_POST['ID'])&&$_POST['ID']>0){
-    $ID = $_POST['ID'];
+}elseif(isset($_GET['ID'])&&$_GET['ID']>0){
+    $ID = $_GET['ID'];
     $sql="SELECT * FROM shuffle_articles WHERE ID='". $ID ."'";
 
 }else{
