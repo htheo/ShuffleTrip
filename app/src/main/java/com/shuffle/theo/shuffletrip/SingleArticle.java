@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,9 +36,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SingleArticle extends AppCompatActivity implements OnClickListener {
+
+// Swipe
+    float x1,x2;
+    float y1, y2;
+
     public ImageButton home;
     public ImageButton search;
     public ImageButton user;
+    public Button button_next;
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
@@ -73,6 +81,24 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         text_id = (TextView) findViewById(R.id.title_article);
         title_view = (TextView) findViewById(R.id.title);
         title_ville = (TextView) findViewById(R.id.title_ville);
+//        button_next = (Button) findViewById(R.id.button_next);
+        Button buttonNext = (Button)findViewById(R.id.button_next);
+        buttonNext.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+//                Toast.makeText(SingleArticle.this, "Suivant", Toast.LENGTH_SHORT).show();
+//                Intent Intent = new Intent(this, SingleArticle.class);
+                Intent Intent = getIntent();
+                finish();
+                String ville = title_ville.getText().toString();
+
+                Intent.putExtra("id", -1);
+                Intent.putExtra("ville", ville);
+                startActivity(getIntent());
+
+//                this.startActivity(SingleArticle);
+            }
+        });
 
         InputStream is = null;
         StringBuilder sb=null;
@@ -83,8 +109,6 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         String ville_choisi = intent.getStringExtra("ville");
 
         img_single_article = (ImageView) findViewById(R.id.img_single_article);
-
-
 
 
         StrictMode.ThreadPolicy policy = new
@@ -184,6 +208,74 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         return sb.toString();
     }
 
+
+        // Swipe vers la droite pour accéder à un autre post dans la même ville
+        // Si pas de post dans la même ville -> Toast: Pas de post trouvé à proximité -> random
+
+    // onTouchEvent () method gets called when User performs any touch event on screen
+    // Method to handle touch event like left to right swap and right to left swap
+
+    public boolean onTouchEvent(MotionEvent touchevent)
+    {
+        switch (touchevent.getAction())
+        {
+            // when user first touches the screen we get x and y coordinate
+            case MotionEvent.ACTION_DOWN:
+            {
+                x1 = touchevent.getX();
+                y1 = touchevent.getY();
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+            {
+                x2 = touchevent.getX();
+                y2 = touchevent.getY();
+
+                // if left to right sweep event on screen
+                if (x1 < x2)
+                {
+                    Toast.makeText(this, "Left to Right Swap Performed", Toast.LENGTH_SHORT).show();
+                    Intent Intent = getIntent();
+                    finish();
+                    String ville = title_ville.getText().toString();
+
+                    Intent.putExtra("id", -1);
+                    Intent.putExtra("ville", ville);
+                    startActivity(getIntent());
+                }
+
+                // if right to left sweep event on screen
+                if (x1 > x2)
+                {
+                    Toast.makeText(this, "Right to Left Swap Performed", Toast.LENGTH_SHORT).show();
+                    Intent Intent = getIntent();
+                    finish();
+                    String ville = title_ville.getText().toString();
+
+                    Intent.putExtra("id", -1);
+                    Intent.putExtra("ville", ville);
+                    startActivity(getIntent());
+                }
+
+                // if UP to Down sweep event on screen
+                if (y1 < y2)
+                {
+                    Toast.makeText(this, "UP to Down Swap Performed", Toast.LENGTH_LONG).show();
+                }
+
+                // if Down to UP sweep event on screen
+                if (y1 > y2)
+                {
+                    Toast.makeText(this, "Down to UP Swap Performed", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+
+
     public void onClick(View v) {
         if (v == home) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, MainActivity.class);
@@ -197,6 +289,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
             Intent I_News = new Intent(SingleArticle.this, LoginActivity.class);
             this.startActivity(I_News);
         }
+
 
     }
 }

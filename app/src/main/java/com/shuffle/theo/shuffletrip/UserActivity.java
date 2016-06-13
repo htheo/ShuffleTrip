@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -93,6 +94,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
         });
 
         downloadedImage = (ImageView) findViewById(R.id.downloadedImage);
+
+
 
         }
 
@@ -250,9 +253,13 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
             super.onPostExecute(bitmap);
             if (bitmap != null){
                 downloadedImage.setImageBitmap(bitmap);
+                Toast.makeText(UserActivity.this, "Article bien envoyé !", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
+
+
 
 
 }

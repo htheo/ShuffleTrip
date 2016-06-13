@@ -57,13 +57,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.article_alea:
                 Intent Intent = new Intent(this, SingleArticle.class);
 
-
-
                 String ville = name_ville.getText().toString();
 
                 Intent.putExtra("id", -1);
                 Intent.putExtra("ville", ville);
-
 
                 this.startActivity(Intent);
                 break;
