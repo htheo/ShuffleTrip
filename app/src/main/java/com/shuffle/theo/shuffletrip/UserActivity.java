@@ -56,7 +56,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
     private File file;
     private Uri file_uri;
 
-    public String ville, titre, description;
+    public String ville, titre, description, pseudo;
 
     ImageView downloadedImage;
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
@@ -75,8 +75,12 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
         search.setOnClickListener(this);
         pseudo2 = (TextView) findViewById(R.id.pseudo);
         Intent intent = getIntent();
-        String pseudo = intent.getStringExtra("pseudo");
-        pseudo2.setText("Bonjour " + pseudo);
+        if((intent.getStringExtra("pseudo") != null)&&(!"false".equals(intent.getStringExtra("pseudo")))){
+            pseudo = intent.getStringExtra("pseudo");
+        }else{
+            pseudo="false";
+        }
+
 
 
         /*Code Tim*/
@@ -103,10 +107,14 @@ public class UserActivity extends AppCompatActivity implements OnClickListener {
 
         if (v == home) {  //si on va sur l'accueil
             Intent I_News = new Intent(UserActivity.this, MainActivity.class);
+            I_News.putExtra("pseudo", pseudo);
+
             this.startActivity(I_News);
         }
         if (v == search) {  //si on va sur l'accueil
             Intent I_News = new Intent(UserActivity.this, SearchActivity.class);
+            I_News.putExtra("pseudo", pseudo);
+
             this.startActivity(I_News);
         }
 

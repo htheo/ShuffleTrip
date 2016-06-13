@@ -39,6 +39,18 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         home.setOnClickListener(this);
         login.setOnClickListener(this);
         register.setOnClickListener(this);
+        Intent intent = getIntent();
+
+        if((intent.getStringExtra("pseudo") != null)&&(!"false".equals(intent.getStringExtra("pseudo")))){
+            pseudo = intent.getStringExtra("pseudo");
+            Intent I_News = new Intent(LoginActivity.this, UserActivity.class);
+            I_News.putExtra("pseudo", pseudo);
+            startActivity(I_News);
+        }else{
+            pseudo="false";
+
+        }
+        Log.e("pseudo", pseudo);
     }
     // Create an anonymous implementation of OnClickListener
 
@@ -79,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
 
         final String TAG = "AsyncTaskParseJson.java";
-              // set your json string url here
+        // set your json string url here
 
 
         // contacts JSONArray

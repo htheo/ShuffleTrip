@@ -37,6 +37,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     public ImageButton home;
     public ImageButton search;
     public ImageButton user;
+    public String pseudo;
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
@@ -79,6 +80,16 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         home.setOnClickListener(this);
 
         Intent intent = getIntent();
+        if((intent.getStringExtra("pseudo") != null)&&(!"false".equals(intent.getStringExtra("pseudo")))){
+            pseudo = intent.getStringExtra("pseudo");
+            Intent I_News = new Intent(this, UserActivity.class);
+            I_News.putExtra("pseudo", pseudo);
+            startActivity(I_News);
+        }else{
+            pseudo="false";
+
+        }
+        Log.e("pseudo", pseudo);
         int id = intent.getIntExtra("id", 0);
         String ville_choisi = intent.getStringExtra("ville");
 
@@ -187,14 +198,17 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     public void onClick(View v) {
         if (v == home) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, MainActivity.class);
+            I_News.putExtra("pseudo", pseudo);
             this.startActivity(I_News);
         }
         if (v == search) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, SearchActivity.class);
+            I_News.putExtra("pseudo", pseudo);
             this.startActivity(I_News);
         }
         if (v == user) {  //si on va sur l'accueil
             Intent I_News = new Intent(SingleArticle.this, LoginActivity.class);
+            I_News.putExtra("pseudo", pseudo);
             this.startActivity(I_News);
         }
 
