@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
         public ImageView img_single_article,img_single_article2,img_single_article3,img_single_article4,img_single_article5,img_single_article6,img_single_article7,img_single_article8,img_single_article9;
         public String image;
+        public Integer imageNb =1;
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -158,6 +159,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
                 String name;
 
+
                 public DownloadImage(String name){
                     this.name = name;
                 }
@@ -182,8 +184,48 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 @Override
                 protected void onPostExecute(Bitmap bitmap) {
                     super.onPostExecute(bitmap);
+
                     if(null != bitmap) {
-                        img_single_article.setImageBitmap(bitmap);
+                        int value = 0;
+                        if (bitmap.getHeight() <= bitmap.getWidth()) {
+                            value = bitmap.getHeight();
+                        } else {
+                            value = bitmap.getWidth();
+                        }
+
+                        Bitmap finalBitmap = null;
+                        finalBitmap = Bitmap.createBitmap(bitmap, 0, 0, value, value);
+                        switch (imageNb){
+                            case 1:
+                                img_single_article.setImageBitmap(finalBitmap);
+                                break;
+                            case 2:
+                                img_single_article2.setImageBitmap(finalBitmap);
+                                break;
+                            case 3:
+                                img_single_article3.setImageBitmap(finalBitmap);
+                                break;
+                            case 4:
+                                img_single_article4.setImageBitmap(finalBitmap);
+                                break;
+                            case 5:
+                                img_single_article5.setImageBitmap(finalBitmap);
+                                break;
+                            case 6:
+                                img_single_article6.setImageBitmap(finalBitmap);
+                                break;
+                            case 7:
+                                img_single_article7.setImageBitmap(finalBitmap);
+                                break;
+                            case 8:
+                                img_single_article8.setImageBitmap(finalBitmap);
+                                break;
+                            case 9:
+                                img_single_article9.setImageBitmap(finalBitmap);
+                                break;
+                        }
+                        imageNb++;
+
                     }
                 }
             }
