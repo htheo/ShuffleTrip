@@ -66,20 +66,20 @@
 
                 android:layout_width="112dp"
                 android:layout_height="108dp"
-                android:src="@drawable/chateau" />
+                 />
 
             <ImageView
                 android:id="@+id/single_article2"
                 android:layout_width="112dp"
                 android:layout_height="108dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
+                />
             <ImageView
                 android:id="@+id/single_article3"
                 android:layout_width="112dp"
                 android:layout_height="108dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -94,77 +94,22 @@
 
                 android:layout_width="112dp"
                 android:layout_height="108dp"
-                android:src="@drawable/chateau" />
+                />
 
             <ImageView
                 android:id="@+id/single_article5"
                 android:layout_width="112dp"
                 android:layout_height="108dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
+                />
             <ImageView
                 android:id="@+id/single_article6"
                 android:layout_width="112dp"
                 android:layout_height="108dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
+                />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="4dp">
 
-            <ImageView
-                android:id="@+id/single_article7"
-
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:src="@drawable/chateau" />
-
-            <ImageView
-                android:id="@+id/single_article8"
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
-            <ImageView
-                android:id="@+id/single_article9"
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="4dp">
-
-            <ImageView
-                android:id="@+id/single_article10"
-
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:src="@drawable/chateau" />
-
-            <ImageView
-                android:id="@+id/single_article11"
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
-            <ImageView
-                android:id="@+id/single_article12"
-                android:layout_width="112dp"
-                android:layout_height="108dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/chateau"/>
-        </LinearLayout>
 
 
 
@@ -181,24 +126,24 @@
         android:layout_marginTop="4dp">
 
         <ImageView
-            android:id="@+id/single_article13"
+            android:id="@+id/single_article7"
 
             android:layout_width="112dp"
             android:layout_height="108dp"
-            android:src="@drawable/chateau" />
+            />
 
         <ImageView
-            android:id="@+id/single_article14"
+            android:id="@+id/single_article8"
             android:layout_width="112dp"
             android:layout_height="108dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/chateau"/>
+            />
         <ImageView
-            android:id="@+id/single_article15"
+            android:id="@+id/single_article9"
             android:layout_width="112dp"
             android:layout_height="108dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/chateau"/>
+            />
     </LinearLayout>
 
 

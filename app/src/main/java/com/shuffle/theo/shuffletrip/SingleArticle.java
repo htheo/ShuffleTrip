@@ -108,13 +108,10 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         Intent intent = getIntent();
         if((intent.getStringExtra("pseudo") != null)&&(!"false".equals(intent.getStringExtra("pseudo")))){
             pseudo = intent.getStringExtra("pseudo");
-            Intent I_News = new Intent(this, UserActivity.class);
-            I_News.putExtra("pseudo", pseudo);
-            startActivity(I_News);
         }else{
             pseudo="false";
-
         }
+
         Log.e("pseudo", pseudo);
         int id = intent.getIntExtra("id", 0);
         String ville_choisi = intent.getStringExtra("ville");
