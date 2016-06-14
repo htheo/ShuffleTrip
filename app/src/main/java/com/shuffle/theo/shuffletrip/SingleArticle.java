@@ -61,8 +61,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
-    public String post_id;
-
+   
     public ImageView img_single_article;
     public String image;
     public String post_id;
