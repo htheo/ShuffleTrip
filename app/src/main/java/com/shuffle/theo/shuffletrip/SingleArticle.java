@@ -35,6 +35,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class SingleArticle extends AppCompatActivity implements OnClickListener {
 
 // Swipe
@@ -46,6 +47,10 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     public ImageButton user;
     public String pseudo;
     public Button button_next;
+    public Button like_up;
+    public Button like_down;
+    public String post_id;
+    public String like;
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
@@ -55,6 +60,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     private TextView text_id;
     private TextView title_view;
     private TextView title_ville;
+    private TextView likes;
     String myJSON;
     JSONObject jsonObj = null;
     String title;
@@ -63,7 +69,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     private static final String TAG_TITLE = "title";
     private static final String TAG_DESCRIB = "describ";
     private static final String TAG_VILLE ="ville";
-    private static final String TAG_IMAGE ="iamge";
+    private static final String TAG_IMAGE ="image";
 
     JSONArray peoples = null;
 
@@ -82,22 +88,31 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         text_id = (TextView) findViewById(R.id.title_article);
         title_view = (TextView) findViewById(R.id.title);
         title_ville = (TextView) findViewById(R.id.title_ville);
+        likes = (TextView) findViewById(R.id.likes);
 //        button_next = (Button) findViewById(R.id.button_next);
+
+        // ACTION QUAND CLIQUE SUR NEXT
         Button buttonNext = (Button)findViewById(R.id.button_next);
         buttonNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-//                Toast.makeText(SingleArticle.this, "Suivant", Toast.LENGTH_SHORT).show();
-//                Intent Intent = new Intent(this, SingleArticle.class);
                 Intent Intent = getIntent();
                 finish();
                 String ville = title_ville.getText().toString();
-
-                Intent.putExtra("id", -1);
-                Intent.putExtra("ville", ville);
                 startActivity(getIntent());
+            }
+        });
 
-//                this.startActivity(SingleArticle);
+        // ACTION QUAND CLIQUE SUR UP!
+        Button likeUp = (Button)findViewById(R.id.like_up);
+        likeUp.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("pseudo envoyé", pseudo);
+
+                post_id = "1";
+                like = "1";
+                Toast.makeText(getApplicationContext(),"Article liké",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,7 +139,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         StrictMode.setThreadPolicy(policy);
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://timothee-dorand.fr/shuffletrip/show_articles?ville="+ville_choisi+"ID="+id);
+        HttpGet httpget = new HttpGet("http://timothee-dorand.fr/shuffletrip/show_articles?ville="+ville_choisi);
 
         HttpResponse response;
         try {
@@ -137,6 +152,8 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
                 JSONArray arr = new JSONArray(result);
                 JSONObject jObj = arr.getJSONObject(0);
+                String article_id = jObj.optString("id");
+                String article_likes = jObj.optString("likes");
                 String title = jObj.optString("title");
                 String ville = jObj.optString("ville");
                 String describ = jObj.optString("describ");
@@ -148,6 +165,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 title_view.setText(title);
                 title_ville.setText(ville);
                 text_id.setText(describ);
+                likes.setText(article_likes);
                 Toast.makeText(this, title, Toast.LENGTH_LONG).show();
                 instream.close();
 
@@ -281,6 +299,38 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         }
         return false;
     }
+
+/*    protected void makeRequest() {
+
+        String urlconnection = SERVER_ADRESS + "add_like.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, urlconnection,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("post_id",post_id);
+                map.put("pseudo",pseudo);
+                map.put("like",like);
+
+                return map;
+            }
+        };
+        requestQueue.add(request);
+    }*/
+
 
 
 

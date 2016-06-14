@@ -23,7 +23,10 @@ try {
 if ($_GET['ville']!="") {
 
     $ville = $_GET['ville'];
-    $sql="SELECT * FROM shuffle_articles WHERE ville='". $ville ."' LIMIT 1";
+    $sql = "SELECT * FROM shuffle_articles WHERE ville='". $ville ."' LIMIT 1";
+    //$sql = $sql[array_rand($sql)];
+    //$sql = $items[rand(0, count($items) - 1)];
+
   
 }elseif(isset($_GET['ID'])&&$_GET['ID']>0){
     $ID = $_GET['ID'];

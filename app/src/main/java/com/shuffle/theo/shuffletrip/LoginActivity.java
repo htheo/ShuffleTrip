@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             I_News.putExtra("pseudo", pseudo);
             startActivity(I_News);
         }else{
-            pseudo="false";
+            pseudo = "false";
 
         }
         Log.e("pseudo", pseudo);
