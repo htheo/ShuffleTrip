@@ -61,7 +61,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
-   
+
     public ImageView img_single_article;
     public String image;
     public String post_id;
@@ -115,85 +115,8 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
             }
         });
 
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        // ACTION QUAND CLIQUE SUR UP!
 
-        Button likeUp = (Button)findViewById(R.id.like_up);
-
-        likeUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/add_like.php", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        System.out.println(response.toString());
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Log.e("pseudo envoyé", pseudo);
-                        like = "1";
-                        Log.e("post envoyé", post_id);
-                        Log.e("like envoyé", like);
-
-                        Map<String,String> parameters  = new HashMap<String, String>();
-                        parameters.put("pseudo",pseudo);
-                        parameters.put("post_id",post_id);
-                        parameters.put("like",like);
-
-                        return parameters;
-                    }
-                };
-                requestQueue.add(request);
-            }
-
-        });
-        Button likeDown = (Button)findViewById(R.id.like_down);
-
-        likeDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/add_like.php", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        System.out.println(response.toString());
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Log.e("pseudo envoyé", pseudo);
-
-                        like = "-1";
-                        Log.e("post envoyé", post_id);
-                        Log.e("like envoyé", like);
-
-                        Map<String,String> parameters  = new HashMap<String, String>();
-                        parameters.put("pseudo",pseudo);
-                        parameters.put("post_id",post_id);
-                        parameters.put("like",like);
-
-                        return parameters;
-                    }
-                };
-                requestQueue.add(request);
-            }
-
-        });
 
 
         InputStream is = null;
@@ -302,21 +225,46 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 Bitmap finalBitmap = null;
                 finalBitmap = Bitmap.createBitmap(bitmap, 0, 0, value, value);
                 img_single_article.setImageBitmap(finalBitmap);
-            }
-            like_up.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Add your code in here!
-                    if (v==like_up){
-                        Intent Intent = getIntent();
-                        String id = post_id;
-                        String add ="true";
-                        Intent.putExtra("id", post_id);
-                        Intent.putExtra("add", add);
-                        startActivity(getIntent());
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+                // ACTION QUAND CLIQUE SUR UP!
+
+
+                like_up.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        like = "1";
+                        String url ="http://timothee-dorand.fr/shuffletrip/add_like?pseudo="+pseudo+"&like="+like+"&post_id="+post_id;
+                        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                System.out.println(response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }) {
+
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Log.e("pseudo envoyé", pseudo);
+
+                                Log.e("post envoyé", post_id);
+                                Log.e("like envoyé", like);
+
+                                Map<String,String> parameters  = new HashMap<String, String>();
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(request);
                     }
-                }
-            });
+
+                });
+            }
+
         }
     }
 
