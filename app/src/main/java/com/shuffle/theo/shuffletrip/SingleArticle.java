@@ -141,6 +141,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         StrictMode.setThreadPolicy(policy);
 
         HttpClient httpclient = new DefaultHttpClient();
+
         HttpGet httpget = new HttpGet("http://timothee-dorand.fr/shuffletrip/show_articles?ville="+ville_choisi);
 
         HttpResponse response;
@@ -155,10 +156,10 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 JSONArray arr = new JSONArray(result);
                 JSONObject jObj = arr.getJSONObject(0);
                 String article_id = jObj.optString("id");
-                String article_likes = jObj.optString("likes");
                 String title = jObj.optString("title");
                 post_id = jObj.optString("ID");
                 String ville = jObj.optString("ville");
+                String nb_like = jObj.optString("like_nb");
                 String describ = jObj.optString("describ");
                 String image = jObj.optString("image");
 
@@ -168,7 +169,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 title_view.setText(title);
                 title_ville.setText(ville);
                 text_id.setText(describ);
-                likes.setText(article_likes);
+                likes.setText(nb_like);
                 Toast.makeText(this, title, Toast.LENGTH_LONG).show();
                 instream.close();
 
@@ -215,9 +216,12 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 public void onClick(View v) {
                     // Add your code in here!
                     if (v==like_up){
-                        Log.e("id search", post_id);
-                        HttpClient httpclient = new DefaultHttpClient();
-                        HttpGet httpget = new HttpGet("http://timothee-dorand.fr/shuffletrip/add_like2?id="+post_id);
+                        Intent Intent = getIntent();
+                        String id = post_id;
+                        String add ="true";
+                        Intent.putExtra("id", post_id);
+                        Intent.putExtra("add", add);
+                        startActivity(getIntent());
                     }
                 }
             });

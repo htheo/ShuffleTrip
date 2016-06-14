@@ -26,6 +26,7 @@ if(isset($_GET['addlike'])&&$id!=0){
     SET like_nb=like_nb+1 WHERE ID=".$id;
      $req = $conn->prepare($sql);
         $req->execute();
+       
 }else{
 
 
