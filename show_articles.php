@@ -20,39 +20,49 @@ try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // check for required fields
-if ($_GET['ville']!="") {
 
-    $ville = $_GET['ville'];
-    $sql="SELECT * FROM shuffle_articles WHERE ville='". $ville ."' LIMIT 1";
-  
-}elseif(isset($_GET['ID'])&&$_GET['ID']>0){
-    $ID = $_GET['ID'];
-    $sql="SELECT * FROM shuffle_articles WHERE ID='". $ID ."'";
-
+if(isset($_GET['addlike'])&&$id!=0){
+    $sql ="UPDATE shuffle_articles
+    SET like_nb=like_nb+1 WHERE ID=".$id;
+     $req = $conn->prepare($sql);
+        $req->execute();
 }else{
-    $ID = 1;
-    $sql="SELECT * FROM shuffle_articles order by RAND() LIMIT 1";
-    
-    
-    //mysql_free_result ($result);  
-}
-    $req = $conn->prepare($sql);
-    $req->execute();
-          
-    $result = $req->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($result as $val){
-        $output[]=$val;    
-        $id=$val['ID'];
+
+    if ($_GET['ville']!="") {
+
+        $ville = $_GET['ville'];
+        $sql="SELECT * FROM shuffle_articles WHERE ville='". $ville ."' LIMIT 1";
       
-        $title=$val['title'];
-        $describ=$val['describ'];
-        $ville=$val['ville'];
-        $image=$val['image'];
+    }elseif($id!=0){
+        $sql="SELECT * FROM shuffle_articles WHERE ID=". $id;
+
     }
 
+    else{
+        $sql="SELECT * FROM shuffle_articles ORDER BY RAND() LIMIT 1";
+        
+        
+        //mysql_free_result ($result);  
+    }
+        $req = $conn->prepare($sql);
+        $req->execute();
+              
+        $result = $req->fetchAll(PDO::FETCH_ASSOC);
 
-print(json_encode($output));
+        foreach($result as $val){
+            $output[]=$val;    
+            $id=$val['ID'];
+          
+            $title=$val['title'];
+            $describ=$val['describ'];
+            $ville=$val['ville'];
+            $image=$val['image'];
+        }
+
+
+    print(json_encode($output));
+}
 
 }catch(PDOException $e)
     {

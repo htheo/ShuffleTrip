@@ -275,14 +275,5 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 }
                 return sb.toString();
             }
-
-
-
-
-
-
         }
-
-
-
     }

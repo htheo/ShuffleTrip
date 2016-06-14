@@ -20,17 +20,17 @@ try {
 // check for required fields
 if ($_GET['ville']!="") {
     $ville = $_GET['ville'];
-     $sql="SELECT * FROM shuffle_articles WHERE ID>'".$id."'&& ville='". $ville ."' LIMIT 15";
+     $sql="SELECT * FROM shuffle_articles WHERE ID>'".$id."'&& ville='". $ville ."' LIMIT 9";
 
 }
 elseif(isset($_GET['recherche'])){
     $recherche = $_GET['recherche'];
     
-     $sql="SELECT * FROM shuffles_articles WHERE ID>'". $id ."'";
+     $sql="SELECT * FROM shuffles_articles WHERE ID>'". $id ."' LIMIT 9";
 
 }else{
     
-     $sql="SELECT * FROM shuffle_articles WHERE ID>'".$id."'";
+     $sql="SELECT * FROM shuffle_articles WHERE ID>'".$id."' LIMIT 9";
     
     //mysql_free_result ($result);  
 }

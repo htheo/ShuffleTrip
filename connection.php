@@ -6,7 +6,7 @@ if(isset($_POST["encoded_string"])){
 	
 	$encoded_string = $_POST["encoded_string"];
 	$image_name = $_POST["image_name"];
-	$ville = $_POST["title"];
+	$title = $_POST["title"];
 	$describ = $_POST["describ"];
 	$ville = $_POST["ville"];
 

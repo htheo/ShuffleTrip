@@ -20,65 +20,168 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:weightSum="1"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-        <TextView
-            android:id="@+id/title_ville"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Ville Inconnue"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:textSize="35dp" />
+        android:layout_alignParentStart="true">
+
         <TextView
             android:id="@+id/title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Le chateau d'Anet"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:text="Le titre d&apos;un magnifique article."
+            android:textStyle="normal"
             android:textColor="#FFFFFF"
             android:gravity="center"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp" />
+
         <ImageView
             android:id="@+id/img_single_article"
             android:clickable="true"
-            android:layout_width="304dp"
-            android:layout_height="290dp"
+            android:layout_width="fill_parent"
+            android:layout_height="315dp"
             android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center|left"
+            android:src="@drawable/chateau"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textStyle="normal"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:gravity="left" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" likes"
+                android:textStyle="normal"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:gravity="left" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:layout_width="54dp"
+                android:layout_height="21dp"
+                android:text="UP!"
+                android:id="@+id/like_up"
+                android:layout_marginTop="0dp"
+                android:textSize="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_gravity="right"
+                android:gravity="center|left"
+                android:background="#00ffffff" />
+
+            <Button
+                android:layout_width="54dp"
+                android:layout_height="20dp"
+                android:text="Down"
+                android:id="@+id/like_down"
+                android:layout_marginTop="0dp"
+                android:textSize="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_gravity="right"
+                android:gravity="center|left"
+                android:background="#00ffffff" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:text="Next !"
+                android:id="@+id/button_next"
+                android:layout_marginTop="0dp"
+                android:background="#00ffffff"
+                android:textSize="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_gravity="right"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#88ffffff">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:textStyle="normal"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.5"
+                android:gravity="left"
+                android:phoneNumber="true"
+                android:background="#79ffffff"
+                android:layout_gravity="bottom" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_ville"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ville Inconnue"
+                android:textStyle="normal"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.5"
+                android:gravity="left"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/title_article"
-            android:layout_width="280dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Construit à la gloire de Diane de Poitiers, les visites sont possibles, c'est un endroit très sympa je recommande"
+            android:text="Vous n&apos;avez pas de connection internet. La ville ne peut pas s&apos;afficher. Cependant, c&apos;est un aperçu d&apos;un article. "
             android:textStyle="normal"
             android:textColor="#FFFFFF"
-            android:gravity="center|center_horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
             android:textAlignment="inherit" />
 
 
-
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=">"
-        android:id="@+id/button_next"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="268dp"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="175dp"
-        android:background="#00ffffff"
-        android:textSize="40dp" />
 
 </RelativeLayout>
 
