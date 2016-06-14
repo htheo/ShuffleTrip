@@ -20,9 +20,13 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -77,6 +81,13 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
     ListView list;
 
+    String name;
+    String id;
+    InputStream is=null;
+    String result=null;
+    String line=null;
+    int code;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +123,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
                 post_id = "1";
                 like = "1";
+                insert();
                 Toast.makeText(getApplicationContext(),"Article liké",Toast.LENGTH_SHORT).show();
             }
         });
@@ -300,36 +312,80 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         return false;
     }
 
-/*    protected void makeRequest() {
 
-        String urlconnection = SERVER_ADRESS + "add_like.php";
+    public void insert()
+    {
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, urlconnection,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        nameValuePairs.add(new BasicNameValuePair("pseudo",pseudo));
+        nameValuePairs.add(new BasicNameValuePair("post_id",post_id));
+        nameValuePairs.add(new BasicNameValuePair("like",like));
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
+        try
         {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("post_id",post_id);
-                map.put("pseudo",pseudo);
-                map.put("like",like);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(SERVER_ADRESS + "add_like.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+            Log.e("pass 1", "connection success ");
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
 
-                return map;
+        try
+        {
+            BufferedReader reader = new BufferedReader
+                    (new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line + "\n");
             }
-        };
-        requestQueue.add(request);
-    }*/
+            is.close();
+            result = sb.toString();
+            Log.e("pass 2", "connection success ");
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 2", e.toString());
+        }
+
+        try
+        {
+//            result = getJSONUrl(url);
+            JSONObject json_data = new JSONObject(result);
+            code=(json_data.getInt("code"));
+
+            if(code==1)
+            {
+                Toast.makeText(getBaseContext(), "Inserted Successfully",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(), "Sorry, Try Again",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 3", e.toString());
+        }
+    }
+/*
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_single_article, menu);
+        return true;
+    }
+*/
 
 
 
