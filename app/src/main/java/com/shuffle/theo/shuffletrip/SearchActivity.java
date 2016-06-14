@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -30,6 +32,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         protected ImageButton home;
         protected ImageButton search;
         protected ImageButton user;
+        public TextView id_text;
         private String single_article_id;
         public LinearLayout layout;
         public String pseudo;
@@ -39,10 +42,15 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         public ImageView img_single_article,img_single_article2,img_single_article3,img_single_article4,img_single_article5,img_single_article6,img_single_article7,img_single_article8,img_single_article9;
         public String image;
         public Integer imageNb =1;
+        public EditText edittext;
+        public Integer id = 1;
+        public String id_article = "0";
+        public ImageButton search_article;
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_search);
+            id_text = (TextView) findViewById(R.id.id_text);
             img_single_article = (ImageView) findViewById(R.id.single_article1);
             img_single_article2 = (ImageView) findViewById(R.id.single_article2);
             img_single_article3 = (ImageView) findViewById(R.id.single_article3);
@@ -52,6 +60,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             img_single_article7 = (ImageView) findViewById(R.id.single_article7);
             img_single_article8 = (ImageView) findViewById(R.id.single_article8);
             img_single_article9 = (ImageView) findViewById(R.id.single_article9);
+            search_article = (ImageButton) findViewById(R.id.search_article);
             this.home = (ImageButton) findViewById(R.id.home);
             this.user = (ImageButton) findViewById(R.id.user);
 
@@ -63,9 +72,14 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             }else{
                 pseudo="false";
             }
-
+            int id = intent.getIntExtra("id", 0);
+            if(id>0){
+                new AsyncTaskParseJson().execute(id);
+            }else{
+                new AsyncTaskParseJson().execute(1);
+            }
             Log.e("pseudo", pseudo);
-            new AsyncTaskParseJson().execute();
+
 
 
 
@@ -89,9 +103,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             }
 
 
+
+
         }
 
-        public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
+        public class AsyncTaskParseJson extends AsyncTask<Integer, String, String> {
 
             final String TAG = "AsyncTaskParseJson.java";
             // set your json string url here
@@ -103,12 +119,13 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             protected void onPreExecute() {}
 
             @Override
-            protected String doInBackground(String... args) {
+            protected String doInBackground(Integer... args) {
+                id=args[0];
                 JSONArray dataJsonArr = null;
                 StrictMode.ThreadPolicy policy = new
                         StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
-                String yourJsonStringUrl = "http://timothee-dorand.fr/shuffletrip/show_articles_multi";
+                String yourJsonStringUrl = "http://timothee-dorand.fr/shuffletrip/show_articles_multi?id="+id;
                 Log.e(TAG, "je passe par la");
                 try {
 
@@ -129,22 +146,12 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                         String ville = c.getString("ville");
                         String describ = c.getString("describ");
                         String image = c.getString("image");
+                        id_article = c.getString("ID");
+
                         if (image != null) {
                             new DownloadImage(image).execute();
                         }
-                        // show the values in our logcat
-                    /*single_article_id = "single_article"+i;
-                    int id = getResources().getIdentifier(single_article_id, "id", getPackageName());
-                    single_article = (ImageView) findViewById(id);
-
-
-                    single_article.setImageDrawable(R.drawable.chateau);*/
-
-
-
-                        //single_article.setText(ville);
-                        Log.e(TAG, "ID: " + ville);
-                        Log.e(TAG, "ID: " + describ);
+                        Log.e("TAG", "id"+id_article);
 
                     }
 
@@ -153,6 +160,21 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 }
 
                 return null;
+            }
+            @Override
+            protected void onPostExecute(String ville){
+                Log.e(TAG, "ID : "+id_article);
+                search_article.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Add your code in here!
+                        if (v==search_article){
+                            Log.e("id search", id_article);
+                        }
+                    }
+                });
+
+
             }
 
             private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {

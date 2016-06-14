@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 I_News.putExtra("pseudo", pseudo);
                 startActivity(I_News);
                 break;
+
             case R.id.search:
                 I_News = new Intent(this, SearchActivity.class);
                 I_News.putExtra("pseudo", pseudo);

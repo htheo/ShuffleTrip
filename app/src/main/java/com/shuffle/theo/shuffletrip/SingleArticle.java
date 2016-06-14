@@ -51,6 +51,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
     public ImageView img_single_article;
     public String image;
+    public String post_id;
 
     private TextView text_id;
     private TextView title_view;
@@ -138,6 +139,7 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
                 JSONArray arr = new JSONArray(result);
                 JSONObject jObj = arr.getJSONObject(0);
                 String title = jObj.optString("title");
+                post_id = jObj.optString("ID");
                 String ville = jObj.optString("ville");
                 String describ = jObj.optString("describ");
                 String image = jObj.optString("image");
@@ -189,6 +191,15 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
             if(null != bitmap) {
                 img_single_article.setImageBitmap(bitmap);
             }
+            search_article.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Add your code in here!
+                    if (v==search_article){
+                        Log.e("id search", id_article);
+                    }
+                }
+            });
         }
     }
 

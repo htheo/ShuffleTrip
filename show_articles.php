@@ -43,11 +43,15 @@ if ($_GET['ville']!="") {
 
     foreach($result as $val){
         $output[]=$val;    
+        $id=$val['ID'];
+      
         $title=$val['title'];
         $describ=$val['describ'];
         $ville=$val['ville'];
         $image=$val['image'];
     }
+
+
 print(json_encode($output));
 
 }catch(PDOException $e)
