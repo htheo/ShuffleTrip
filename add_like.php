@@ -1,22 +1,21 @@
 <?php
 
 
-//if($_SERVER["REQUEST_METHOD"]=="POST"){
+if($_SERVER["REQUEST_METHOD"]=="POST"){
 	require 'config.php';
 	addlik();
 
-//}
+}
 
 function addlik(){
-	echo 'coucou';
 	$user = "timotheefxtim";
 	$pass = "Adminparis96";
 	$host = "timotheefxtim.mysql.db";
 	$dbname = "timotheefxtim";
 
-	$pseudo = $_GET["pseudo"];	
-	$post_id = $_GET["post_id"];
-	$like = $_GET["like"];
+	$pseudo = $_POST["pseudo"];	
+	$post_id = $_POST["post_id"];
+	$like = $_POST["like"];
 	try {
 	    $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -52,7 +51,7 @@ function addlike($pseudo, $post_id, $like)
 	$pseudo = $_GET["pseudo"];	
 	$post_id = $_GET["post_id"];
 	$like = $_GET["like"];
-	echo $pseudo." ".$post_id." ".$like." ";
+
 
 	$query = "INSERT INTO shuffle_likes(pseudo,post_id,likes) VALUES ('$pseudo','$post_id','$like');";
 
@@ -60,11 +59,11 @@ function addlike($pseudo, $post_id, $like)
 	mysqli_close($connect);
 
 
+
 	addlike2($post_id, $like);
 	
 }
 function addlike2($id,$like){
-	echo 'coucou';
 	$user = "timotheefxtim";
 	$pass = "Adminparis96";
 	$host = "timotheefxtim.mysql.db";
@@ -89,3 +88,4 @@ function addlike2($id,$like){
     	echo $sql . "<br>" . $e->getMessage();
     }
 }
+
