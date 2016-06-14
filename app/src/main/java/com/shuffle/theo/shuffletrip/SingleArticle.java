@@ -18,15 +18,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,8 +40,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class SingleArticle extends AppCompatActivity implements OnClickListener {
@@ -53,11 +57,12 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     public Button button_next;
     public Button like_up;
     public Button like_down;
-    public String post_id;
     public String like;
 
     // Récupération de l'image
     private static final String SERVER_ADRESS = "http://timothee-dorand.fr/shuffletrip/";
+    public String post_id;
+
     public ImageView img_single_article;
     public String image;
 
@@ -77,16 +82,11 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
     JSONArray peoples = null;
 
-    ArrayList<HashMap<String, String>> personList;
+//    ArrayList<HashMap<String, String>> personList;
 
     ListView list;
 
-    String name;
-    String id;
-    InputStream is=null;
-    String result=null;
-    String line=null;
-    int code;
+    RequestQueue requestQueue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,18 +114,83 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
             }
         });
 
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
         // ACTION QUAND CLIQUE SUR UP!
         Button likeUp = (Button)findViewById(R.id.like_up);
-        likeUp.setOnClickListener(new OnClickListener() {
+
+        likeUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("pseudo envoyé", pseudo);
+                StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/add_like.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-                post_id = "1";
-                like = "1";
-                insert();
-                Toast.makeText(getApplicationContext(),"Article liké",Toast.LENGTH_SHORT).show();
+                        System.out.println(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Log.e("pseudo envoyé", pseudo);
+                        like = "1";
+                        Log.e("post envoyé", post_id);
+                        Log.e("like envoyé", like);
+
+                        Map<String,String> parameters  = new HashMap<String, String>();
+                        parameters.put("pseudo",pseudo);
+                        parameters.put("post_id",post_id);
+                        parameters.put("like",like);
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
             }
+
+        });
+        Button likeDown = (Button)findViewById(R.id.like_down);
+
+        likeDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StringRequest request = new StringRequest(Request.Method.POST, "http://timothee-dorand.fr/shuffletrip/add_like.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        System.out.println(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Log.e("pseudo envoyé", pseudo);
+
+                        like = "-1";
+                        Log.e("post envoyé", post_id);
+                        Log.e("like envoyé", like);
+
+                        Map<String,String> parameters  = new HashMap<String, String>();
+                        parameters.put("pseudo",pseudo);
+                        parameters.put("post_id",post_id);
+                        parameters.put("like",like);
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
+            }
+
         });
 
         InputStream is = null;
@@ -164,8 +229,8 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
 
                 JSONArray arr = new JSONArray(result);
                 JSONObject jObj = arr.getJSONObject(0);
-                String article_id = jObj.optString("id");
-                String article_likes = jObj.optString("likes");
+                post_id = jObj.optString("id");
+                String article_likes = jObj.optString("like_nb");
                 String title = jObj.optString("title");
                 String ville = jObj.optString("ville");
                 String describ = jObj.optString("describ");
@@ -217,7 +282,16 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             if(null != bitmap) {
-                img_single_article.setImageBitmap(bitmap);
+                int value = 0;
+                if (bitmap.getHeight() <= bitmap.getWidth()) {
+                    value = bitmap.getHeight();
+                } else {
+                    value = bitmap.getWidth();
+                }
+
+                Bitmap finalBitmap = null;
+                finalBitmap = Bitmap.createBitmap(bitmap, 0, 0, value, value);
+                img_single_article.setImageBitmap(finalBitmap);
             }
         }
     }
@@ -313,79 +387,6 @@ public class SingleArticle extends AppCompatActivity implements OnClickListener 
     }
 
 
-    public void insert()
-    {
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-        nameValuePairs.add(new BasicNameValuePair("pseudo",pseudo));
-        nameValuePairs.add(new BasicNameValuePair("post_id",post_id));
-        nameValuePairs.add(new BasicNameValuePair("like",like));
-
-        try
-        {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(SERVER_ADRESS + "add_like.php");
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-            is = entity.getContent();
-            Log.e("pass 1", "connection success ");
-        }
-        catch(Exception e)
-        {
-            Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
-                    Toast.LENGTH_LONG).show();
-        }
-
-        try
-        {
-            BufferedReader reader = new BufferedReader
-                    (new InputStreamReader(is,"iso-8859-1"),8);
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            is.close();
-            result = sb.toString();
-            Log.e("pass 2", "connection success ");
-        }
-        catch(Exception e)
-        {
-            Log.e("Fail 2", e.toString());
-        }
-
-        try
-        {
-//            result = getJSONUrl(url);
-            JSONObject json_data = new JSONObject(result);
-            code=(json_data.getInt("code"));
-
-            if(code==1)
-            {
-                Toast.makeText(getBaseContext(), "Inserted Successfully",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(), "Sorry, Try Again",
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-        catch(Exception e)
-        {
-            Log.e("Fail 3", e.toString());
-        }
-    }
-/*
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_single_article, menu);
-        return true;
-    }
-*/
 
 
 
